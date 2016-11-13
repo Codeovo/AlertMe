@@ -10,6 +10,8 @@ public class Config {
     private String accountSID;
     private String accountAuth;
 
+    private String twilioNumber;
+
     public Config(AlertMe alertMe) {
         this.alertMe = alertMe;
         this.config = alertMe.getConfig();
@@ -22,6 +24,7 @@ public class Config {
     private void loadValues() {
         accountSID = config.getString("twilio.account-sid");
         accountAuth = config.getString("twilio.account-auth");
+        twilioNumber = config.getString("twilio.twilio-number");
     }
 
     public String getAccountSID() {
@@ -30,5 +33,9 @@ public class Config {
 
     public String getAccountAuth() {
         return accountAuth;
+    }
+
+    public String getTwilioNumber() {
+        return twilioNumber;
     }
 }
