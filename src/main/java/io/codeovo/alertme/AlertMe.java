@@ -3,6 +3,7 @@ package io.codeovo.alertme;
 import com.twilio.Twilio;
 
 import io.codeovo.alertme.config.Config;
+import io.codeovo.alertme.listeners.alert.AlertListener;
 import io.codeovo.alertme.listeners.samples.PlayerOPEvent;
 
 import org.bukkit.Bukkit;
@@ -24,6 +25,7 @@ public class AlertMe extends JavaPlugin {
     }
 
     private void registerListeners() {
+        getServer().getPluginManager().registerEvents(new AlertListener(this), this);
 
         if (pluginConfig.isOPEnabled()) {
             getServer().getPluginManager().registerEvents(new PlayerOPEvent(this), this);
