@@ -1,2 +1,2 @@
-# alert-me
-AlertMe is a Spigot plugin developed in Java that alerts ingame Minecraft users of weather alerts as they are issued. 
+# AlertMe
+AlertMe is a Spigot plugin developed in Java that alerts server administrators of certain events when they occur. 
