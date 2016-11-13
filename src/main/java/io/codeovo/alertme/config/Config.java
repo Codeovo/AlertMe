@@ -4,6 +4,8 @@ import io.codeovo.alertme.AlertMe;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.util.List;
+
 public class Config {
     private AlertMe alertMe;
     private FileConfiguration config;
@@ -15,6 +17,7 @@ public class Config {
     private String twilioNumber;
 
     private String prefix;
+    private List<String> toAlertNumbers;
 
     private boolean isOPEnabled;
     private boolean isOPIgnoreCancelled;
@@ -36,6 +39,7 @@ public class Config {
         twilioNumber = config.getString("twilio.twilio-number");
 
         prefix = config.getString("alerts.prefix");
+        toAlertNumbers = config.getStringList("alerts.alert-numbers");
 
         isOPEnabled = config.getBoolean("op-event.enabled");
         isOPIgnoreCancelled = config.getBoolean("op-event.ignore-cancelled");
@@ -57,9 +61,9 @@ public class Config {
         return twilioNumber;
     }
 
-    public String getPrefix() {
-        return prefix;
-    }
+    public String getPrefix() { return prefix; }
+
+    public List<String> getToAlertNumbers() { return toAlertNumbers; }
 
     public boolean isOPEnabled() {
         return isOPEnabled;

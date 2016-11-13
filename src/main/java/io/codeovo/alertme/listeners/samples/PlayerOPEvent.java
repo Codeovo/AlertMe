@@ -1,9 +1,9 @@
 package io.codeovo.alertme.listeners.samples;
 
 import io.codeovo.alertme.AlertMe;
-
 import io.codeovo.alertme.events.AlertType;
 import io.codeovo.alertme.events.TwilioAlertEvent;
+
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

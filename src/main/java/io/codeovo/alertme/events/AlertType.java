@@ -2,5 +2,6 @@ package io.codeovo.alertme.events;
 
 public enum  AlertType {
     SMS,
-    VOICE
+    VOICE,
+    BOTH
 }

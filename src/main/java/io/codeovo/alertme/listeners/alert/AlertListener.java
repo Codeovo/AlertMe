@@ -12,6 +12,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 public class AlertListener implements Listener {
     private AlertMe alertMe;
 
@@ -19,33 +22,23 @@ public class AlertListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onAlert(TwilioAlertEvent e) {
-        final String broadcastMessage = alertMe.getPluginConfig().getPrefix() + e.getMessage();
+        String broadcastMessage = (alertMe.getPluginConfig().getPrefix() + e.getMessage())
+                .replace("%time%", new Timestamp(new Date().getTime()).toString());
 
         switch (e.getAlertType()) {
             case SMS:
-                Bukkit.getScheduler().runTaskAsynchronously(alertMe, new Runnable() {
-                    public void run() {
-                        try {
-                            Message message = Message.creator(new PhoneNumber("to"),
-                                    new PhoneNumber(alertMe.getPluginConfig().getTwilioNumber()),
-                                    broadcastMessage).create();
-
-                            if (alertMe.getPluginConfig().isDebug()) {
-                                alertMe.getLogger().info("AlertMe - Message sent: " + message.getSid() + ", Price: " +
-                                        message.getPrice() + " " + message.getPriceUnit().getCurrencyCode());
-                            }
-                        } catch (TwilioException e) {
-                            alertMe.getLogger().info("AlertMe - Message sending failed: " + e.getMessage());
-
-                            if (alertMe.getPluginConfig().isDebug()) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                });
+                for (String number : alertMe.getPluginConfig().getToAlertNumbers()) {
+                    handleMessageSending(number, broadcastMessage);
+                }
 
                 break;
             case VOICE:
+                break;
+            case BOTH:
+                for (String number : alertMe.getPluginConfig().getToAlertNumbers()) {
+                    handleMessageSending(number, broadcastMessage);
+                }
+                
                 break;
             default:
                 try {
@@ -59,5 +52,28 @@ public class AlertListener implements Listener {
                 }
                 break;
         }
+    }
+
+    private void handleMessageSending(final String toPhoneNumber, final String broadcastMessage) {
+        Bukkit.getScheduler().runTaskAsynchronously(alertMe, new Runnable() {
+            public void run() {
+                try {
+                    Message message = Message.creator(new PhoneNumber(toPhoneNumber),
+                            new PhoneNumber(alertMe.getPluginConfig().getTwilioNumber()),
+                            broadcastMessage).create();
+
+                    if (alertMe.getPluginConfig().isDebug()) {
+                        alertMe.getLogger().info("AlertMe - Message sent: " + message.getSid() + ", Price: " +
+                                message.getPrice() + " " + message.getPriceUnit().getCurrencyCode());
+                    }
+                } catch (TwilioException e) {
+                    alertMe.getLogger().info("AlertMe - Message sending failed: " + e.getMessage());
+
+                    if (alertMe.getPluginConfig().isDebug()) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 }
