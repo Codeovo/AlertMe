@@ -14,6 +14,8 @@ public class Config {
     private String accountAuth;
     private String twilioNumber;
 
+    private String prefix;
+
     private boolean isOPEnabled;
     private boolean isOPIgnoreCancelled;
 
@@ -33,6 +35,8 @@ public class Config {
         accountAuth = config.getString("twilio.account-auth");
         twilioNumber = config.getString("twilio.twilio-number");
 
+        prefix = config.getString("alerts.prefix");
+
         isOPEnabled = config.getBoolean("op-event.enabled");
         isOPIgnoreCancelled = config.getBoolean("op-event.ignore-cancelled");
     }
@@ -51,6 +55,10 @@ public class Config {
 
     public String getTwilioNumber() {
         return twilioNumber;
+    }
+
+    public String getPrefix() {
+        return prefix;
     }
 
     public boolean isOPEnabled() {

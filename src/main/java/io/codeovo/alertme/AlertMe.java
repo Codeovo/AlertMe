@@ -25,7 +25,9 @@ public class AlertMe extends JavaPlugin {
 
     private void registerListeners() {
 
-        getServer().getPluginManager().registerEvents(new PlayerOPEvent(this), this);
+        if (pluginConfig.isOPEnabled()) {
+            getServer().getPluginManager().registerEvents(new PlayerOPEvent(this), this);
+        }
     }
 
     private void loadConfiguration() {

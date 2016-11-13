@@ -4,6 +4,8 @@ twilio:
   account-sid: "account-sid"
   account-auth: "account-auth"
   twilio-number: "+10000000000"
+alerts:
+  prefix: "SERVER: "
 op-event:
   enabled: true
   ignore-cancelled: true
