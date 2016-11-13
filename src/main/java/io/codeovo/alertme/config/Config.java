@@ -11,8 +11,10 @@ public class Config {
 
     private String accountSID;
     private String accountAuth;
-
     private String twilioNumber;
+
+    private boolean isOPEnabled;
+    private boolean isOPIgnoreCancelled;
 
     public Config(AlertMe alertMe) {
         this.alertMe = alertMe;
@@ -29,6 +31,9 @@ public class Config {
         accountSID = config.getString("twilio.account-sid");
         accountAuth = config.getString("twilio.account-auth");
         twilioNumber = config.getString("twilio.twilio-number");
+
+        isOPEnabled = config.getBoolean("op-event.enabled");
+        isOPIgnoreCancelled = config.getBoolean("op-event.ignore-cancelled");
     }
 
     public String getAccountSID() {
@@ -41,5 +46,13 @@ public class Config {
 
     public String getTwilioNumber() {
         return twilioNumber;
+    }
+
+    public boolean isOPEnabled() {
+        return isOPEnabled;
+    }
+
+    public boolean isOPIgnoreCancelled() {
+        return isOPIgnoreCancelled;
     }
 }
