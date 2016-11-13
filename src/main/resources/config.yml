@@ -1,3 +1,5 @@
+plugin:
+  debug: true
 twilio:
   account-sid: "account-sid"
   account-auth: "account-auth"

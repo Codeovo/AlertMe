@@ -7,6 +7,8 @@ public class Config {
     private AlertMe alertMe;
     private FileConfiguration config;
 
+    private boolean isDebug;
+
     private String accountSID;
     private String accountAuth;
 
@@ -22,6 +24,8 @@ public class Config {
     }
 
     private void loadValues() {
+        isDebug = config.getBoolean("plugin.debug");
+
         accountSID = config.getString("twilio.account-sid");
         accountAuth = config.getString("twilio.account-auth");
         twilioNumber = config.getString("twilio.twilio-number");
