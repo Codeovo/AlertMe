@@ -38,7 +38,7 @@ public class AlertListener implements Listener {
                 for (String number : alertMe.getPluginConfig().getToAlertNumbers()) {
                     handleMessageSending(number, broadcastMessage);
                 }
-                
+
                 break;
             default:
                 try {

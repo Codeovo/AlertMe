@@ -11,3 +11,4 @@ alerts:
 op-event:
   enabled: true
   ignore-cancelled: true
+  alerting-type: 2

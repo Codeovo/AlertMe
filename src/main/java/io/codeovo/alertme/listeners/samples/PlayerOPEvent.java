@@ -3,6 +3,7 @@ package io.codeovo.alertme.listeners.samples;
 import io.codeovo.alertme.AlertMe;
 import io.codeovo.alertme.events.AlertType;
 import io.codeovo.alertme.events.TwilioAlertEvent;
+import io.codeovo.alertme.exception.AlertMeException;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -21,9 +22,35 @@ public class PlayerOPEvent implements Listener {
                 return;
             }
 
-            Bukkit.getPluginManager().callEvent(
-                    new TwilioAlertEvent(e.getPlayer().getDisplayName() + " attempted to use the OP command.",
-                            AlertType.SMS));
+            switch (alertMe.getPluginConfig().getOpAlertingType()) {
+                case 0:
+                    Bukkit.getPluginManager().callEvent(
+                            new TwilioAlertEvent(e.getPlayer().getDisplayName() + " attempted to use the OP command.",
+                                    AlertType.SMS));
+                    break;
+                case 1:
+                    Bukkit.getPluginManager().callEvent(
+                            new TwilioAlertEvent(e.getPlayer().getDisplayName() + " attempted to use the OP command.",
+                                    AlertType.VOICE));
+                    break;
+                case 2:
+                    Bukkit.getPluginManager().callEvent(
+                            new TwilioAlertEvent(e.getPlayer().getDisplayName() + " attempted to use the OP command.",
+                                    AlertType.BOTH));
+                    break;
+                default:
+                    try {
+                        throw new AlertMeException("Unable to throw OP Event, likely an invalid alerting type.");
+                    } catch (AlertMeException e1) {
+                        alertMe.getLogger().info("AlertMe - Something went wrong: " + e1.getMessage());
+
+                        if (alertMe.getPluginConfig().isDebug()) {
+                            e1.printStackTrace();
+                        }
+                    }
+
+                    break;
+            }
         }
     }
 }

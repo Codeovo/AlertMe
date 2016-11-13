@@ -21,6 +21,7 @@ public class Config {
 
     private boolean isOPEnabled;
     private boolean isOPIgnoreCancelled;
+    private int opAlertingType;
 
     public Config(AlertMe alertMe) throws Error {
         this.alertMe = alertMe;
@@ -43,6 +44,7 @@ public class Config {
 
         isOPEnabled = config.getBoolean("op-event.enabled");
         isOPIgnoreCancelled = config.getBoolean("op-event.ignore-cancelled");
+        opAlertingType = config.getInt("op-event.alerting-type");
     }
 
     public boolean isDebug() {
@@ -72,4 +74,6 @@ public class Config {
     public boolean isOPIgnoreCancelled() {
         return isOPIgnoreCancelled;
     }
+
+    public int getOpAlertingType() { return opAlertingType; }
 }
