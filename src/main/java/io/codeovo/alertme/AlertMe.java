@@ -9,34 +9,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class AlertMe extends JavaPlugin {
-    private static AlertMe pluginInstance;
-
     private Config pluginConfig;
 
     @Override
     public void onEnable() {
         getLogger().info("AlertMe - Enabling...");
-        pluginInstance = this;
         getLogger().info("AlertMe - Loading configuration...");
         loadConfiguration();
-        getLogger().info("AlertMe - Loading commands...");
-        registerCommands();
         getLogger().info("AlertMe - Loading listeners...");
         registerListeners();
         getLogger().info("AlertMe - Initializing Twilio...");
         Twilio.init(pluginConfig.getAccountSID(), pluginConfig.getAccountAuth());
         getLogger().info("AlertMe - Enabled.");
-    }
-
-    @Override
-    public void onDisable() {
-        getLogger().info("AlertMe - Disabling...");
-        pluginInstance = null;
-        getLogger().info("AlertMe - Disabled.");
-    }
-
-    private void registerCommands() {
-
     }
 
     private void registerListeners() {
@@ -49,13 +33,15 @@ public class AlertMe extends JavaPlugin {
             pluginConfig = new Config(this);
         } catch (Error e) {
             getLogger().info("AlertMe - An error was encountered: " + e.getMessage());
-            e.printStackTrace();
+
+            if (pluginConfig.isDebug()) {
+                e.printStackTrace();
+            }
+
             getLogger().info("AlertMe - Plugin will disable...");
             Bukkit.getPluginManager().disablePlugin(this);
         }
     }
-
-    public static AlertMe getInstance() { return pluginInstance; }
 
     public Config getPluginConfig() { return pluginConfig; }
 }

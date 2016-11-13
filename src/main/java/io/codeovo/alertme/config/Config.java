@@ -37,6 +37,10 @@ public class Config {
         isOPIgnoreCancelled = config.getBoolean("op-event.ignore-cancelled");
     }
 
+    public boolean isDebug() {
+        return isDebug;
+    }
+
     public String getAccountSID() {
         return accountSID;
     }
