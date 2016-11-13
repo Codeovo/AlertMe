@@ -12,9 +12,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 public class PlayerOPEvent implements Listener {
     private AlertMe alertMe;
 
-    public PlayerOPEvent(AlertMe alertMe) {
-        this.alertMe = alertMe;
-    }
+    public PlayerOPEvent(AlertMe alertMe) { this.alertMe = alertMe; }
 
     @EventHandler
     public void onOP(PlayerCommandPreprocessEvent e) {

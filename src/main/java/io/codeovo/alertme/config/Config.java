@@ -1,6 +1,7 @@
 package io.codeovo.alertme.config;
 
 import io.codeovo.alertme.AlertMe;
+
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class Config {
@@ -16,7 +17,7 @@ public class Config {
     private boolean isOPEnabled;
     private boolean isOPIgnoreCancelled;
 
-    public Config(AlertMe alertMe) {
+    public Config(AlertMe alertMe) throws Error {
         this.alertMe = alertMe;
         this.config = alertMe.getConfig();
 
@@ -25,7 +26,7 @@ public class Config {
         loadValues();
     }
 
-    private void loadValues() {
+    private void loadValues() throws Error {
         isDebug = config.getBoolean("plugin.debug");
 
         accountSID = config.getString("twilio.account-sid");

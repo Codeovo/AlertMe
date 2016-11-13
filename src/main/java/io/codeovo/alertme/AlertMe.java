@@ -3,8 +3,9 @@ package io.codeovo.alertme;
 import com.twilio.Twilio;
 
 import io.codeovo.alertme.config.Config;
-
 import io.codeovo.alertme.listeners.samples.PlayerOPEvent;
+
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class AlertMe extends JavaPlugin {
@@ -44,7 +45,14 @@ public class AlertMe extends JavaPlugin {
     }
 
     private void loadConfiguration() {
-        pluginConfig = new Config(this);
+        try {
+            pluginConfig = new Config(this);
+        } catch (Error e) {
+            getLogger().info("AlertMe - An error was encountered: " + e.getMessage());
+            e.printStackTrace();
+            getLogger().info("AlertMe - Plugin will disable...");
+            Bukkit.getPluginManager().disablePlugin(this);
+        }
     }
 
     public static AlertMe getInstance() { return pluginInstance; }
