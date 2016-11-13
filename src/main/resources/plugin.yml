@@ -1,0 +1,4 @@
+name: AlertMe
+version: 1.0.0
+author: Codeovo
+main: io.codeovo.alertme.AlertMe
