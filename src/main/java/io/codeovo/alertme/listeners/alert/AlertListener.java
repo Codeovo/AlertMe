@@ -1,6 +1,7 @@
 package io.codeovo.alertme.listeners.alert;
 
 import com.twilio.exception.TwilioException;
+import com.twilio.rest.api.v2010.account.Call;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 
@@ -33,10 +34,15 @@ public class AlertListener implements Listener {
 
                 break;
             case VOICE:
+                for (String number : alertMe.getPluginConfig().getToAlertNumbers()) {
+                    handlePhoneCallSending(number, broadcastMessage);
+                }
+
                 break;
             case BOTH:
                 for (String number : alertMe.getPluginConfig().getToAlertNumbers()) {
                     handleMessageSending(number, broadcastMessage);
+                    handlePhoneCallSending(number, broadcastMessage);
                 }
 
                 break;
@@ -68,6 +74,29 @@ public class AlertListener implements Listener {
                     }
                 } catch (TwilioException e) {
                     alertMe.getLogger().info("AlertMe - Message sending failed: " + e.getMessage());
+
+                    if (alertMe.getPluginConfig().isDebug()) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+    private void handlePhoneCallSending(final String toPhoneNumber, final String broadcastMessage) {
+        Bukkit.getScheduler().runTaskAsynchronously(alertMe, new Runnable() {
+            public void run() {
+                try {
+                    Call call = Call.creator(new PhoneNumber(toPhoneNumber),
+                            new PhoneNumber(alertMe.getPluginConfig().getTwilioNumber()),
+                            broadcastMessage).create();
+
+                    if (alertMe.getPluginConfig().isDebug()) {
+                        alertMe.getLogger().info("AlertMe - Call made: " + call.getSid() + ", Price: " +
+                                call.getPrice() + " " + call.getPriceUnit().getCurrencyCode());
+                    }
+                } catch (TwilioException e) {
+                    alertMe.getLogger().info("AlertMe - Call making failed: " + e.getMessage());
 
                     if (alertMe.getPluginConfig().isDebug()) {
                         e.printStackTrace();

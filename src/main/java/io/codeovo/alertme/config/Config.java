@@ -7,7 +7,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.util.List;
 
 public class Config {
-    private AlertMe alertMe;
     private FileConfiguration config;
 
     private boolean isDebug;
@@ -24,10 +23,9 @@ public class Config {
     private int opAlertingType;
 
     public Config(AlertMe alertMe) throws Error {
-        this.alertMe = alertMe;
         this.config = alertMe.getConfig();
 
-        this.alertMe.saveDefaultConfig();
+        alertMe.saveDefaultConfig();
 
         loadValues();
     }
