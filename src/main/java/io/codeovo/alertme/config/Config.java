@@ -14,6 +14,8 @@ public class Config {
         this.alertMe = alertMe;
         this.config = alertMe.getConfig();
 
+        this.alertMe.saveDefaultConfig();
+
         loadValues();
     }
 
@@ -22,4 +24,11 @@ public class Config {
         accountAuth = config.getString("twilio.account-auth");
     }
 
+    public String getAccountSID() {
+        return accountSID;
+    }
+
+    public String getAccountAuth() {
+        return accountAuth;
+    }
 }
